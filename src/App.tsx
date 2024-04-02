@@ -1,10 +1,10 @@
+import { Alert, Box, Button, Collapse, TextField } from "@mui/material";
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [UUID, setUUID] = useState("");
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -79,13 +79,47 @@ function App() {
               <u>Note:</u>
             </b>{" "}
             This will only delete the data stored on ower servers, <b>not</b>{" "}
-            the data stored locally on your device.
+            the data stored locally on your device. If data is still stored on
+            the device when the app is opened, that data will get synced back to
+            our servers.<br></br>Uninstall the app to prevent this
           </i>
         </p>
-        <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
+        <div
+          className="card"
+          style={{
+            justifyContent: "",
+          }}
+        >
+          <TextField
+            fullWidth
+            id="UUID-field"
+            label="UUID"
+            variant="outlined"
+            color="error"
+            value={UUID}
+            onChange={(e) => setUUID(e.target.value)}
+            focused
+          />
+          <br></br>
+          <Button
+            style={{ marginTop: 10, marginBottom: 10 }}
+            variant="contained"
+            color="error"
+            onClick={() => {
+              setUUID("");
+              setOpen(true);
+              setTimeout(() => setOpen(false), 5000);
+            }}
+          >
             Delete Data
-          </button>
+          </Button>
+          <Box sx={{ width: "100%" }}>
+            <Collapse in={open}>
+              <Alert variant="filled" severity="success">
+                This is a filled success Alert.
+              </Alert>
+            </Collapse>
+          </Box>
         </div>
       </div>
     </>
